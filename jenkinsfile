@@ -1,0 +1,22 @@
+pipeline {
+    agent any 
+    stages {
+        stage('Code-Pull') { 
+            steps {
+                git 'https://github.com/Nihal201295/onlinebookstore.git'
+            }
+        }
+        stage('Code-Build') { 
+            steps {
+                sh 'sudo apt-get update'
+                sh 'sudo apt-get install maven -y'
+                sh 'mvn clean package'
+            }
+        }
+        stage('Code-Deploy') { 
+            steps {
+                deploy adapters: [tomcat9(credentialsId: '9914b5ac-64e9-477e-a53a-9fd28ae35b03', path: '', url: 'http://54.91.208.71:9090/')], contextPath: '/', war: '**/*.war'
+            }
+        }
+    }
+}
