@@ -7,5 +7,12 @@ pipeline {
                 git 'https://github.com/Nihal201295/onlinebookstore.git'
             }
         }
+        stage('Code-Build') {
+            steps {
+                sh 'sudo apt-get update -y'
+                sh 'sudo apt-get install maven -y'
+                sh 'mvn clean package'
+            }
+        }
     }
 }
