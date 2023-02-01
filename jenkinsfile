@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     stages {
         stage('Code-Pull') {
             steps {
@@ -17,7 +16,7 @@ pipeline {
                 withAWS(credentials: '9c9533ca-90d8-4d09-8020-bbca67b00611', region: 'us-east-1') {
                     sh 'sudo apt-get update -y'
                     sh 'sudo apt-get install awscli -y'
-                    sh 'aws cp /var/lib/jenkins/workspace/p12/target/onlinebookstore.war s3://was-swa'
+                    sh 'aws s3 cp /var/lib/jenkins/workspace/p12/target/onlinebookstore.war s3://was-swa'
 
     // some block
 }               
@@ -25,9 +24,9 @@ pipeline {
         }
         stage('Code-Deploy') {
             steps {
-                withCredentials([sshUserPrivateKey(credentialsId: '9fe53e67-f6c9-4b00-9718-46e5c646b81d', keyFileVariable: 'new', usernameVariable: 'ubuntu')]) {
+                withCredentials([sshUserPrivateKey(credentialsId: '9fe53e67-f6c9-4b00-9718-46e5c646b81d', keyFileVariable: 'CloudNG')]) {
                      sh'''
-                    ssh -i ${new} -o StrictHostKeyChecking=no ubuntu@54.146.70.46<<EOF
+                    ssh     -i ${cloudNG} -o StrictHostKeyChecking=no ubuntu@54.146.70.46<<EOF
                     sudo apt update -y
                     sudo apt install awscli -y
                     aws --version
@@ -38,9 +37,9 @@ pipeline {
                     curl -O https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.71/bin/apache-tomcat-9.0.71.tar.gz
                     sudo tar -xvf apache-tomcat-9.0.71.tar.gz -C /opt/
                     sudo sh /opt/apache-tomcat-9.0.71/bin/shutdown.sh
-                    sudo cp -rv onlinebookstore.war bookstore.war 
-                   sudo cp -rv bookstore.war /opt/apache-tomcat-9.0.71/webapps/ 
-                   sudo sh /opt/apache-tomcat-9.0.71/bin/startup.sh
+                    sudo cp -rv onlinebookstore.war bookstore.war 
+                    sudo cp -rv bookstore.war /opt/apache-tomcat-9.0.71/webapps/ 
+                    sudo sh /opt/apache-tomcat-9.0.71/bin/startup.sh
                     ''' 
 }
             }
