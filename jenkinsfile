@@ -9,9 +9,18 @@ pipeline {
         }
         stage('Code-Build') {
             steps {
-                sh 'sudo apt-get update -y'
-                sh 'sudo apt-get install maven -y'
                 sh 'mvn clean package'
+            }
+        }
+        stage('Code-Deploy') {
+            steps {
+                withAWS(credentials: '9c9533ca-90d8-4d09-8020-bbca67b00611', region: 'us-east-1') {
+                    sh 'sudo apt-get update -y'
+                    sh 'sudo apt-get install awscli -y'
+                    sh 'aws cp /var/lib/jenkins/workspace/p12/target/onlinebookstore.war s3://was-swa'
+
+    // some block
+}               
             }
         }
     }
