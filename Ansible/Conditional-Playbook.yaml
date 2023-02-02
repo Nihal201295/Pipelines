@@ -1,8 +1,9 @@
--name: Condition for running task
-hosts: all
-tasks:
-  -name: Running Task on Condition
-  debug:
-    msg: "This task is Running on Ubuntu"
-    when: ansible distribution =="ubuntu"
-    
+---
+  - name: 'Condition for running task'
+    hosts: all
+    tasks:
+      - name: Running Task on Condition
+        debug:
+          msg: 'This task is Running on ubuntu'
+
+
