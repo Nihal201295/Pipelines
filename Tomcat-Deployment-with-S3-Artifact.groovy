@@ -13,8 +13,6 @@ pipeline {
     stages {
         stage('Code-Buid') {
             steps {
-                sh 'sudo apt-get update -y'
-                sh 'sudo apt-get install maven -y'
                 sh 'mvn --version'
                 sh 'mvn clean package'
             }
