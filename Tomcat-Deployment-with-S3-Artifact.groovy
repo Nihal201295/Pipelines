@@ -23,7 +23,7 @@ pipeline {
                 }
             }
         }
-        stage('Code-Build') {
+        stage('Code-Deploy') {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'ccf334b0-92dd-4bc1-a114-d75acb765912', keyFileVariable: 'Nagpur')]) {
                     sh '''
