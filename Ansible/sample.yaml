@@ -1,0 +1,8 @@
+---
+  - name: sample playbook
+    hosts: all
+    tasks:
+      - name: printing name on hosts
+        debug:
+          msg: 'Playbook Runs Successfully'
+          
