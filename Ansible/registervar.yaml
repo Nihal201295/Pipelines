@@ -1,0 +1,12 @@
+---
+  - name: ignore error
+    hosts: all
+    tasks:
+      - name: ignoreerror
+        shall: ps -aux | grep java | grep -vjava
+        ignore_error: yes
+
+      - name: run the process
+        debug:
+          msg: start the process
+          

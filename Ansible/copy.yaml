@@ -1,0 +1,8 @@
+---
+  - name: 'copy files from one location to another'
+    hosts: all
+    tasks:
+      - name: 'copy files'
+        ansible.builtin.copy:
+          src: /home/ubuntu/AWS_KEY.pem
+          dest: /home/ubuntu
